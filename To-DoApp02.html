@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ToDoApp</title>
+    <meta name="author" content="Lyndon">
+    <meta name="description" content="Calculator App">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="icon" type="image/x-icon" href="" />
+    <style>
+        h1 {
+            text-align: center;
+
+        }
+        button{
+            color: green;
+        }
+        header{
+            background-color: blueviolet;
+            padding: 44px;
+        }
+        footer{
+            background-color: rgba(132, 126, 138, 0.171);
+            block-size: 1.5vw;
+            padding: 6px;
+        }
+        main{
+            padding:44px;
+            background-image:url('images/flower.jpg');
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <h1 text-align:center>TO DO LIST</h1>
+        <input type="text" id="input1""> 
+        <button onclick="adding()"id=" input1B">Add task</button>
+
+        <button onclick="Display()" >Display task list</button>
+        <br><br>
+        <input type="text" id="input2">
+        <button onclick="deleteItem('input2.value')">Delete Item</button> 
+        <br><br>
+        <input type=" text" id="input4"placeholder="enter index">
+        <input type=" text" id="input3" placeholder="enter the new task">
+        <button onclick="editItem(input4.value)" >Edit task</button> 
+        <br><br>
+        
+        <button id="input5"onclick="sortItem()">Sort List</button> 
+        <br><br>
+        <input type=" text" id="input6" placeholder="date format year-mm-day">
+        <input type="submit" onclick="AddingDate()">
+        <br><br>
+         <p id="ramsp"></p>
+        <ul id="entry">
+
+        </ul>
+    </main>
+    <footer></footer>
+    <script>
+        /*``-----Class----------*/
+        class MyDoList {
+
+            constructor(taskDo) {
+                this.taskDo = taskDo;
+                
+            }
+
+            getTask() {
+                return (this.taskDO );
+
+            }
+
+        }
+
+        /*``-----Array to store objects----------*/
+        //let task = [];
+        
+        
+
+        //getting references to buttons
+        const add = document.getElementById('input1B');
+        const refresh = document.getElementById('refresh');
+        const save = document.getElementById('save');
+
+        //getting reference to div where content is displayed
+        const entrypoint = document.getElementById('entry');
+
+        /* --- functions --- */
+
+        //Creates object using values of input fields
+          function adding (){
+            const mytask = new MyDoList(input1.value);
+            let todo = localStorage.getItem("todo");
+            if (todo === null) {
+                task = [];
+            } else {
+                task = JSON.parse(todo);
+            }
+            task.push(input1.value);
+            input1.value = "";
+            localStorage.setItem("todo", JSON.stringify(task));
+            //displayTodo();
+        
+        }
+
+        function deleteItem(ind){
+            let todo= localStorage.getItem("todo");
+            task=JSON.parse(todo);
+            task.splice(ind,1);
+            input2.value="";
+            localStorage.setItem("todo", JSON.stringify(task));
+
+        }
+        function editItem(int){
+            let todo= localStorage.getItem("todo");
+            task=JSON.parse(todo);
+            task[int]=input3.value;
+            input3.value="";
+            localStorage.setItem("todo", JSON.stringify(task));
+
+            }
+        function sortItem(){
+            let todo= localStorage.getItem("todo");
+            task=JSON.parse(todo);
+            task.sort();
+            localStorage.setItem("todo", JSON.stringify(task));
+
+            }
+        function AddingDate(){
+            let todo = localStorage.getItem("todo");
+            if (todo === null) {
+                task = [];
+            } else {
+                task = JSON.parse(todo);
+            }
+            let date = document.getElementById("input6").value;
+            let localDate = new Date(date);
+            task.push(localDate);
+            localStorage.setItem("todo", JSON.stringify(task));
+            //console.log(localDate);
+
+            }
+            function Display(){
+            let todo= localStorage.getItem("todo");
+            task=JSON.parse(todo);
+
+            let lt=task.length;
+            let text="<ul>";
+                for(let i=0;i<lt;i++){
+                    text+="<li>"+task[i]+"</li>";
+                }
+                text +="</ul>";
+
+            document.getElementById("ramsp").innerHTML=text;
+            }
+
+
+    </script>
+
+
+</body>
+
+</html>
